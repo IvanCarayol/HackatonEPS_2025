@@ -1,0 +1,100 @@
+nombre,num_estaciones_bus,tiene_metro,disponibilidad_taxi,cercania_aeropuerto
+South Los Angeles,0,1,0.5,0.0
+Southeast Los Angeles,0,0,0.45,0.0
+Hollywood,2,1,0.95,0.0
+North Hollywood,0,1,0.7,0.0
+Van Nuys,0,1,0.5,0.0
+Mid City,0,1,0.5,0.0
+Sylmar,0,0,0.3,0.0
+San Pedro,0,1,0.6,0.0
+Northridge,0,0,0.5,0.0
+Woodland Hills,0,1,0.15,0.0
+Boyle Heights,0,1,0.6,0.0
+Sherman Oaks,0,1,0.7,0.0
+Pacoima,0,0,0.3,0.0
+Koreatown,0,1,0.85,0.0
+Westlake,0,1,0.45,0.0
+Reseda,0,1,0.5,0.0
+Panorama City,0,0,0.45,0.0
+Valley Glen,0,1,0.4,0.0
+North Hills,0,0,0.15,0.0
+Central City,0,1,0.95,0.0
+Sun Valley,0,0,0.3,0.0
+Westwood,1,1,0.85,0.0
+Wilmington,0,1,0.45,0.0
+Canoga Park,0,1,0.45,0.0
+Granada Hills,0,0,0.3,0.0
+Winnetka,0,1,0.45,0.0
+Highland Park,0,1,0.45,0.0
+Lake Balboa,0,1,0.45,0.0
+Downtown,2,1,0.95,0.0
+Mid City West,0,1,0.9,0.0
+Encino,0,1,0.45,0.0
+El Sereno,0,1,0.45,0.0
+Harbor Gateway,0,1,0.45,0.0
+West Hills,0,0,0.15,0.0
+Palms,0,1,0.45,0.0
+Chatsworth,0,1,0.3,0.0
+Mar Vista,0,1,0.45,0.0
+Studio City,0,1,0.7,0.0
+Watts,0,1,0.45,0.0
+Arleta,0,0,0.45,0.0
+Mid Wilshire,0,1,0.45,0.0
+Westchester,7,1,1.0,1.0
+Silver Lake,0,0,0.75,0.0
+Tarzana,0,1,0.45,0.0
+Park Mesa Heights,0,0,0.45,0.0
+Brentwood,0,0,0.3,0.0
+Sawtelle,0,1,0.45,0.0
+Del Rey,0,0,0.45,0.3
+Hollywood Hills,0,1,0.2,0.0
+Lincoln Heights,0,1,0.45,0.0
+Eagle Rock,0,0,0.45,0.0
+Jefferson Park,0,1,0.45,0.0
+Venice,0,0,0.85,0.0
+Harvard Heights,0,0,0.45,0.0
+Tujunga,0,0,0.2,0.0
+MacArthur Park,0,1,0.45,0.0
+Los Feliz,0,1,0.7,0.0
+Valley Village,0,0,0.4,0.0
+University Park,1,0,0.45,0.0
+Harbor City,0,1,0.45,0.0
+Rampart Village,0,0,0.45,0.0
+West Adams,0,1,0.5,0.0
+Central City East,0,1,0.45,0.0
+Porter Ranch,0,0,0.25,0.0
+Echo Park,0,0,0.7,0.0
+Glassell Park,0,0,0.45,0.0
+Pacific Palisades,0,0,0.2,0.0
+Mission Hills,0,0,0.15,0.0
+Pico-Robertson,0,0,0.45,0.0
+Adams-Normandie,0,0,0.45,0.0
+Mount Washington,0,1,0.45,0.0
+Sunland,0,0,0.2,0.0
+Pico-Union,0,1,0.45,0.0
+Playa Del Rey,0,0,0.45,0.5
+Lakeview Terrace,0,0,0.45,0.0
+West Los Angeles,1,1,0.45,0.0
+Cheviot Hills,0,1,0.15,0.0
+Atwater Village,0,0,0.45,0.0
+Arlington Heights,0,0,0.45,0.0
+Beverly Crest,0,0,0.15,0.0
+Leimert Park,0,1,0.45,0.0
+Cypress Park,0,0,0.45,0.0
+Crestview,0,0,0.45,0.0
+Chinatown,0,1,0.45,0.0
+Playa Vista,0,0,0.45,0.5
+Montecito Heights,0,0,0.45,0.0
+Beverlywood,0,0,0.45,0.0
+Toluca Lake,0,0,0.45,0.0
+Crenshaw,0,1,0.45,0.0
+Bel Air,0,0,0.15,0.0
+Elysian Valley,0,0,0.4,0.0
+Century City,0,0,0.9,0.0
+University Hills,0,0,0.15,0.0
+Shadow Hills,0,0,0.05,0.0
+Hermon,0,0,0.45,0.0
+South Carthay,0,0,0.45,0.0
+La Tuna Canyon,0,0,0.0,0.0
+Beverly Glen,0,0,0.45,0.0
+Elysian Park,0,0,0.45,0.0

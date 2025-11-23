@@ -1,0 +1,100 @@
+nombre,cines_score,gimnasios_score,parques_score,restaurantes_score,bares_score
+South Los Angeles,0.0,0.75,1.0,0.0,0.1
+Southeast Los Angeles,0.0,0.0,0.4688,0.0,0.14
+Hollywood,1.0,1.0,0.2812,0.0,0.9
+North Hollywood,0.3333,0.75,0.5625,0.0,0.16
+Van Nuys,0.0,0.5,0.2812,0.0,0.1
+Mid City,0.0,0.0,0.125,0.0,0.08
+Sylmar,0.0,0.0,0.4375,0.0,0.1
+San Pedro,0.0,0.5,0.7188,0.0,0.08
+Northridge,0.0,0.5,0.0625,0.0,0.12
+Woodland Hills,0.1667,0.25,0.1875,0.0,0.0
+Boyle Heights,0.0,0.5,0.5,0.0,0.16
+Sherman Oaks,0.1667,0.5,0.0938,0.0,0.24
+Pacoima,0.0,0.0,0.25,0.0,0.14
+Koreatown,0.1667,0.75,0.4375,0.0,0.4
+Westlake,0.0,0.0,0.0938,0.0,0.1
+Reseda,0.0,0.0,0.1562,0.0,0.1
+Panorama City,0.0,0.0,0.3125,0.0,0.08
+Valley Glen,0.0,0.0,0.0,0.0,0.14
+North Hills,0.0,0.0,0.0312,0.0,0.14
+Central City,0.1667,0.0,0.0,0.0,0.0
+Sun Valley,0.0,0.0,0.1875,0.0,0.16
+Westwood,0.5,0.5,0.0625,0.0,0.12
+Wilmington,0.0,0.0,0.2812,0.0,0.12
+Canoga Park,0.0,0.0,0.25,0.0,0.08
+Granada Hills,0.1667,0.0,0.1562,0.0,0.0
+Winnetka,0.0,0.0,0.0625,0.0,0.08
+Highland Park,0.1667,0.0,0.4062,0.0,0.08
+Lake Balboa,0.0,0.0,0.0,0.0,0.16
+Downtown,0.5,1.0,0.5,0.0,1.0
+Mid City West,0.1667,0.25,0.0312,0.0,0.8
+Encino,0.1667,0.25,0.4375,0.0,0.14
+El Sereno,0.0,0.0,0.2812,0.0,0.12
+Harbor Gateway,0.0,0.0,0.0,0.0,0.14
+West Hills,0.1667,0.0,0.25,0.0,0.0
+Palms,0.0,0.0,0.0312,0.0,0.16
+Chatsworth,0.1667,0.0,0.2188,0.0,0.16
+Mar Vista,0.0,0.0,0.0625,0.0,0.1
+Studio City,0.0,0.0,0.2188,0.0,0.1
+Watts,0.0,0.25,0.2812,0.0,0.1
+Arleta,0.0,0.0,0.0,0.0,0.08
+Mid Wilshire,0.0,0.0,0.0,0.0,0.1
+Westchester,0.0,0.0,0.0,0.0,0.14
+Silver Lake,0.0,0.25,0.2812,0.0,0.52
+Tarzana,0.0,0.0,0.0938,0.0,0.12
+Park Mesa Heights,0.0,0.0,0.0,0.0,0.12
+Brentwood,0.0,0.5,0.1562,0.0,0.02
+Sawtelle,0.1667,0.0,0.0625,0.0,0.16
+Del Rey,0.0,0.0,0.0,0.0,0.08
+Hollywood Hills,0.0,0.0,0.0938,0.0,0.0
+Lincoln Heights,0.0,0.0,0.4062,0.0,0.16
+Eagle Rock,0.0,0.25,0.1562,0.0,0.14
+Jefferson Park,0.0,0.0,0.2188,0.0,0.1
+Venice,0.0,0.5,0.375,0.0,0.36
+Harvard Heights,0.0,0.0,0.0,0.0,0.14
+Tujunga,0.0,0.0,0.0938,0.0,0.12
+MacArthur Park,0.0,0.0,0.0,0.0,0.14
+Los Feliz,0.3333,0.0,0.4062,0.0,0.1
+Valley Village,0.0,0.0,0.0,0.0,0.1
+University Park,0.0,0.0,0.0938,0.0,0.14
+Harbor City,0.0,0.0,0.0625,0.0,0.1
+Rampart Village,0.0,0.0,0.0,0.0,0.16
+West Adams,0.0,0.0,0.125,0.0,0.16
+Central City East,0.0,0.0,0.0,0.0,0.0
+Porter Ranch,0.0,0.0,0.375,0.0,0.14
+Echo Park,0.0,0.0,0.375,0.0,0.06
+Glassell Park,0.0,0.0,0.3125,0.0,0.08
+Pacific Palisades,0.0,0.25,0.25,0.0,0.02
+Mission Hills,0.0,0.0,0.0,0.0,0.0
+Pico-Robertson,0.0,0.0,0.0,0.0,0.1
+Adams-Normandie,0.0,0.0,0.0,0.0,0.08
+Mount Washington,0.0,0.0,0.0,0.0,0.14
+Sunland,0.0,0.0,0.0312,0.0,0.08
+Pico-Union,0.0,0.0,0.0,0.0,0.14
+Playa Del Rey,0.0,0.0,0.125,0.0,0.14
+Lakeview Terrace,0.0,0.0,0.0,0.0,0.12
+West Los Angeles,0.0,0.0,0.0,0.0,0.08
+Cheviot Hills,0.0,0.0,0.0,0.0,0.0
+Atwater Village,0.0,0.0,0.0,0.0,0.08
+Arlington Heights,0.0,0.0,0.0,0.0,0.12
+Beverly Crest,0.0,0.0,0.0,0.0,0.14
+Leimert Park,0.0,0.0,0.0,0.0,0.12
+Cypress Park,0.0,0.0,0.0,0.0,0.14
+Crestview,0.0,0.0,0.0,0.0,0.12
+Chinatown,0.0,0.0,0.0,0.0,0.16
+Playa Vista,0.1667,0.0,0.0,0.0,0.08
+Montecito Heights,0.0,0.0,0.0,0.0,0.14
+Beverlywood,0.0,0.0,0.0312,0.0,0.12
+Toluca Lake,0.0,0.0,0.0,0.0,0.14
+Crenshaw,0.0,0.0,0.0,0.0,0.1
+Bel Air,0.0,0.0,0.0625,0.0,0.0
+Elysian Valley,0.0,0.0,0.0,0.0,0.16
+Century City,0.1667,0.25,0.0,0.0,0.1
+University Hills,0.0,0.0,0.0,0.0,0.02
+Shadow Hills,0.0,0.0,0.0,0.0,0.02
+Hermon,0.0,0.0,0.0,0.0,0.14
+South Carthay,0.0,0.0,0.0,0.0,0.14
+La Tuna Canyon,0.0,0.0,0.0,0.0,0.16
+Beverly Glen,0.0,0.0,0.0,0.0,0.16
+Elysian Park,0.0,0.0,0.0,0.0,0.1

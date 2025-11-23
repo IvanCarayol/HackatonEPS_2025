@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joc de Barris | Game of Thrones Edition</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    :root {
+      --lannister-gold: #d4af37;
+      --bg-dark: #050505;
+      --text-main: #f0f0f0;
+      --text-muted: #a8a8a8;
+      --iron: #7a7a7a;
+    }
+
+    * { box-sizing: border-box; transition: all 0.2s ease; }
+
+    body {
+      margin: 0; min-height: 100vh; font-family: 'Lato', serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+      color: var(--text-main); display: flex; justify-content: center; padding: 2rem 1rem;
+    }
+
+    .card {
+      width: 100%; max-width: 950px;
+      background: linear-gradient(180deg, #1c1c1c 0%, #111 100%);
+      border: 4px double var(--lannister-gold); border-radius: 4px;
+      padding: 2.5rem; box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
+    }
+
+    h1 {
+      font-family: 'Cinzel', serif; font-weight: 900; font-size: 2.8rem; margin: 0 0 0.5rem 0;
+      background: linear-gradient(to bottom, #fceabb 0%, #d4af37 50%, #9c7e18 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center;
+    }
+    p.subtitle {
+      font-family: 'Cinzel', serif; color: var(--iron); margin-bottom: 2rem; text-align: center; display: block;
+    }
+
+    /* TABS */
+    .tabs-container { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+    .tab-button {
+      background: rgba(0,0,0,0.5); border: 1px solid var(--iron); padding: 0.75rem 2rem;
+      color: var(--iron); font-family: 'Cinzel', serif; font-weight: 700; cursor: pointer;
+    }
+    .tab-active {
+      border-color: var(--lannister-gold); color: var(--lannister-gold);
+      background: linear-gradient(to bottom, #222, #000);
+    }
+
+    /* FORMULARIOS */
+    textarea {
+      width: 100%; background: #0a0a0a; border: 1px solid var(--iron);
+      border-left: 4px solid var(--lannister-gold); padding: 1.5rem; font-size: 1.1rem;
+      color: #e3dac9; resize: vertical; outline: none;
+    }
+    button[type="submit"] {
+      width: 100%; margin-top: 1.5rem; padding: 1rem; border: 1px solid var(--lannister-gold);
+      background: linear-gradient(to bottom, #520000, #300000); color: var(--lannister-gold);
+      font-family: 'Cinzel', serif; font-weight: 700; font-size: 1.2rem; cursor: pointer;
+    }
+    button[type="submit"]:hover { background: linear-gradient(to bottom, #7a0000, #4a0000); }
+
+    /* === ESTILOS ORIGINALES DE LOS BOTONES === */
+    .vars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .var-group { background: rgba(20, 20, 20, 0.8); padding: 1.5rem; border: 1px solid var(--iron); }
+    .var-group-title {
+      font-family: 'Cinzel', serif; font-weight: 700; color: var(--lannister-gold);
+      margin-bottom: 1rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem;
+    }
+
+    /* Contenedor para agrupar botón + input de peso */
+    .option-wrapper {
+        margin-bottom: 0.5rem;
+        border-bottom: 1px dashed #333;
+        padding-bottom: 0.5rem;
+    }
+
+    .subvar-item input { display: none; }
+    .subvar-item { display: block; width: 100%; }
+
+    .chip {
+      display: flex; align-items: center; padding: 0.6rem 1rem;
+      background: #111; border: 1px solid #333; color: var(--text-muted);
+      cursor: pointer; font-size: 0.95rem; transition: all 0.2s;
+    }
+    .chip:hover { border-color: var(--lannister-gold); color: var(--parchment); }
+
+    .subvar-item input:checked + .chip {
+      background: rgba(0, 50, 0, 0.6); border-color: #2e8b57; color: #50c878;
+      font-weight: 600; border-left: 4px solid #50c878;
+    }
+    .subvar-item input:checked + .chip::before { content: "⚔"; margin-right: 8px; }
+
+    /* === NUEVO: INPUT DE PESO (SE AÑADE SIN ROMPER EL BOTÓN) === */
+    .weight-config {
+        display: none; /* Oculto por defecto */
+        margin-top: 5px;
+        padding: 5px 10px;
+        background: rgba(0,0,0,0.5);
+        border-left: 2px solid var(--lannister-gold);
+        align-items: center;
+        justify-content: space-between;
+        animation: fadeIn 0.3s;
+    }
+
+    /* Mostrar input cuando el checkbox dentro de .subvar-item está marcado */
+    .option-wrapper:has(input:checked) .weight-config {
+        display: flex;
+    }
+
+    .weight-label { font-size: 0.8rem; color: #aaa; }
+
+    .weight-input {
+        background: #222;
+        border: 1px solid var(--iron);
+        color: var(--lannister-gold);
+        width: 60px;
+        padding: 3px;
+        text-align: center;
+        font-family: 'Lato', sans-serif;
+        font-weight: bold;
+    }
+    .weight-input:focus { border-color: var(--lannister-gold); outline: none; }
+
+    /* ME DA IGUAL */
+    .ignore-option .chip {
+      border: 1px dashed #666; font-style: italic; justify-content: center;
+    }
+    .ignore-option input:checked + .chip {
+      background: #333; border-color: #666; color: #aaa; border-left: 4px solid #666;
+    }
+    .ignore-option input:checked + .chip::before { content: "✖"; }
+
+    /* RESULTADOS */
+    #user-prefs-summary { display: none; background: rgba(0,0,0,0.6); border: 1px solid var(--lannister-gold); padding: 1.5rem; margin-top: 2rem; }
+    .prefs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .pref-item { border: 1px solid var(--iron); padding: 1rem; text-align: center; }
+    .pref-value { font-family: 'Cinzel', serif; font-size: 1.1rem; margin-top: 0.5rem; }
+
+    /* MAPA */
+    #carousel-container { display: none; margin-top: 2.5rem; }
+    #map-container { height: 400px; width: 100%; border: 4px solid #444; margin-bottom: 2rem; filter: sepia(0.6) hue-rotate(-30deg) contrast(1.1) brightness(0.8); }
+    .active-barrio-card { background: linear-gradient(to bottom, #1a1a1a, #0a0a0a); border: 2px solid var(--lannister-gold); padding: 2rem; text-align: center; }
+    .score-badge { background: var(--targaryen-red); color: var(--lannister-gold); padding: 0.5rem 1.5rem; font-family: 'Cinzel', serif; font-weight: 800; border: 1px solid var(--lannister-gold); }
+    .stat-pill { background: #222; border: 1px solid #444; padding: 0.5rem 1rem; color: var(--text-muted); }
+    .stat-pill b { color: var(--lannister-gold); }
+    .nav-btn { background: #222; color: var(--lannister-gold); border: 1px solid var(--lannister-gold); padding: 0.8rem 1.5rem; font-family: 'Cinzel', serif; cursor: pointer; }
+    .carousel-controls { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; margin-bottom: 1.5rem; padding: 0 1rem; }
+    #prev-btn { justify-self: start; } #next-btn { justify-self: end; } #counter { text-align: center; }
+    #error { color: #ff6b6b; margin-top: 1rem; text-align: center; display: none; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div style="text-align:center;">
+      <h1>👑 Juego de barrios</h1>
+      <p class="subtitle">Reclama tu trono en los reinos de Los Ángeles.</p>
+    </div>
+
+    <div class="tabs-container">
+      <button id="tab-texto" class="tab-button tab-active">📜 Profecía (Texto)</button>
+      <button id="tab-form" class="tab-button">⚙️ Estandartes (Manual)</button>
+    </div>
+
+    <form id="form-preferencias-texto">
+      <textarea id="texto" rows="4" placeholder="Escribe aquí tus deseos, mi Lord/Lady..."></textarea>
+      <button id="btn-enviar-texto" type="submit">🔥 Consultar a los Maestres</button>
+    </form>
+
+    <form id="form-preferencias-form" style="display: none; margin-top: 1rem;">
+      <div class="vars-grid">
+
+        <div class="var-group" data-var="salut">
+          <div class="var-group-title">🌲 Salut y Naturaleza</div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item ignore-option"><input type="checkbox" value="ignore" /><span class="chip">🤷 Me da igual</span></label>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="aire" /><span class="chip">Aire Puro</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="verde" /><span class="chip">Bosque de Dioses (Zonas verdes)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="sonido" /><span class="chip">Silencio</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="hospital" /><span class="chip">Maestres Cerca (Hospitales)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+        </div>
+
+        <div class="var-group" data-var="transporte">
+          <div class="var-group-title">🐎 Movilidad</div>
+          <div class="option-wrapper"><label class="subvar-item ignore-option"><input type="checkbox" value="ignore" /><span class="chip">🤷 Me da igual</span></label></div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="metro" /><span class="chip">Túneles Reales (Metro)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="bus" /><span class="chip">Caravanas (Bus)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="taxi" /><span class="chip">Carruajes Privados (Taxi)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="aeropuerto" /><span class="chip">Pozo Dragón (Aeropuerto)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+        </div>
+
+        <div class="var-group" data-var="precio">
+          <div class="var-group-title">💰 Economía (Banco de Hierro)</div>
+          <div class="option-wrapper"><label class="subvar-item ignore-option"><input type="checkbox" value="ignore" /><span class="chip">🤷 Me da igual</span></label></div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="vivienda" /><span class="chip">Pocas monedas (Barato)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="alquiler" /><span class="chip">Mercados Asequibles</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="prevision" /><span class="chip">Tributos Bajos</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia:</span><input type="number" class="weight-input" value="100" min="0" max="100"></div>
+          </div>
+        </div>
+
+        <div class="var-group" data-var="ocio">
+          <div class="var-group-title">🍷 Ocio y Festines</div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item ignore-option"><input type="checkbox" value="ignore" /><span class="chip">🤷 Me da igual</span></label>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="cine" /><span class="chip">Teatros de Braavos (Cine)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="gimnasio" /><span class="chip">Patio de Armas (Gimnasio)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="bares" /><span class="chip">Tabernas (Bares)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="parque" /><span class="chip">Jardines Reales (Parques)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="restaurante" /><span class="chip">Festines (Restaurantes)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+        </div>
+
+        <div class="var-group" data-var="seguridad">
+          <div class="var-group-title">⚔️ Seguridad (Guardia)</div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item ignore-option"><input type="checkbox" value="ignore" /><span class="chip">🤷 Me da igual</span></label>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="robos_sin" /><span class="chip">Ladronzuelos (Robos sin violencia)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="robos_con" /><span class="chip">Bandidos (Robos con violencia)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="allanamiento" /><span class="chip">Muros Altos (Allanamiento)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="asalto" /><span class="chip">Emboscadas (Asalto)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="vandalismo" /><span class="chip">Saqueos Menores (Vandalismo)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="amenaza" /><span class="chip">Acero Valyrio (Amenaza arma)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+        </div>
+
+        <div class="var-group" data-var="densidad_poblacion">
+          <div class="var-group-title">🏰 Ambiente Urbano</div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item ignore-option"><input type="checkbox" value="ignore" /><span class="chip">🤷 Me da igual</span></label>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="centro" /><span class="chip">Desembarco del Rey (Zona Centro)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="residencial" /><span class="chip">Feudos Nobles (Zona residencial)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+
+          <div class="option-wrapper">
+            <label class="subvar-item"><input type="checkbox" value="infantil" /><span class="chip">Jardines de Agua (Zona infantil)</span></label>
+            <div class="weight-config"><span class="weight-label">Importancia (0-100):</span><input type="number" class="weight-input" value="100" min="0" max="100" data-touched="false" oninput="this.dataset.touched='true'"></div>
+          </div>
+        </div>
+
+      </div>
+      <button id="btn-enviar-form" type="submit">🐉 Dracarys (Calcular)</button>
+    </form>
+
+    <div id="error"></div>
+    <div id="user-prefs-summary"></div>
+
+    <div id="carousel-container">
+      <div id="map-container"></div>
+      <div class="carousel-controls">
+        <button class="nav-btn" id="prev-btn">⚔️ Anterior</button>
+        <span id="counter" style="color:var(--lannister-gold); font-family: 'Cinzel';">1 / 3</span>
+        <button class="nav-btn" id="next-btn">Siguiente ⚔️</button>
+      </div>
+      <div id="active-card-container"></div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
